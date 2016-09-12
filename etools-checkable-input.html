@@ -1,0 +1,162 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+
+<!--
+`etools-checkable-input`
+Checkbox or radio input with label aligned top, right, bottom and left and a disabled state.
+
+### Styling
+
+You can use defined variables and mixins to change element style.
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--etools-checkable-input-size` | Input size | `16px`
+`--etools-checkable-input-checked-color` | Input checked color | `#4a90e2`
+`--etools-checkable-input-unchecked-color` | Input unchecked color | `#737373`
+`--etools-checkable-input-font-size` | Label font size | `12px`
+`--etools-checkable-input-label` | Mixin applied to the label | `{}`
+
+@demo demo/index.html 
+-->
+
+<dom-module id="etools-checkable-input">
+  <template>
+    <style include="iron-flex iron-flex-reverse iron-flex-alignment">
+      :host {
+        --paper-checkbox-label: {
+          display: none;
+        };
+
+        --paper-checkbox-size: var(--etools-checkable-input-size, 16px);
+        --paper-checkbox-checked-color: var(--etools-checkable-input-checked-color, #4a90e2);
+        --paper-checkbox-unchecked-color: var(--etools-checkable-input-unchecked-color, #737373);
+
+        --paper-radio-button-size: var(--etools-checkable-input-size, 16px);
+        --paper-radio-button-checked-color: var(--etools-checkable-input-checked-color, #4a90e2);
+        --paper-radio-button-unchecked-color: var(--etools-checkable-input-unchecked-color, #737373);
+      }
+      label {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: var(--etools-checkable-input-font-size, 12px);
+        font-weight: 400;
+        letter-spacing: 0.011em;
+        line-height: 20px;
+        text-transform: uppercase;
+        cursor: pointer;
+        color: var(--etools-checkable-input-unchecked-color, #737373);
+        @apply(--etools-checkable-input-label);
+      }
+      .disabled label {
+        color: var(--etools-checkable-input-disabled-color, #9b9b9b);
+      }
+      .left-aligned paper-checkbox {
+        margin-right: 10px;
+      }
+      .right-aligned {
+        margin-left: 10px;
+      }
+
+    </style>
+    <div class$="[[_getElementWrapperClasses(labelAlignment)]] [[disabledClass]]">
+      <label id="chLabel" class$="[[_getLabelAlignmentClasses(labelAlignment)]]">[[label]]</label>
+      <div class$="[[_getInputAlignmentClasses(labelAlignment)]]">
+        <template is="dom-if" if="[[_isCheckbox(type)]]">
+          <paper-checkbox checked="{{checked}}" disabled$="[[isDisabled]]"></paper-checkbox>
+        </template>
+        <template is="dom-if" if="[[_isRadioBtn(type)]]">
+          <paper-radio-button checked="{{checked}}" disabled$="[[isDisabled]]"></paper-radio-button>
+        </template>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'etools-checkable-input',
+
+      properties: {
+        type: {
+          type: String,
+          value: 'checkbox'
+        },
+        labelAlignment: {
+          type: String,
+          value: 'right'
+        },
+        checked: {
+          type: Boolean,
+          value: false,
+          notify: true,
+          reflectToAttribute: true
+        },
+        isDisabled: {
+          type: Boolean,
+          value: false,
+          observer: '_updateDisabledClass'
+        }
+      },
+      listeners: {
+        'chLabel.tap': '_updateInputVal'
+      },
+      _updateInputVal: function() {
+        if (this.isDisabled) {
+          return false;
+        }
+        this.checked = !this.checked;
+      },
+      _isCheckbox: function(inputType) {
+          return inputType === 'checkbox';
+      },
+      _isRadioBtn: function(inputType) {
+        return inputType === 'radio';
+      },
+      _getElementWrapperClasses: function(align) {
+        if (align === 'bottom') {
+          return 'layout vertical-reverse';
+        } else if (align === 'right') {
+          return 'layout horizontal-reverse wrap-reverse';
+        } else if (align === 'left') {
+          return 'layout horizontal';
+        } else {
+          return '';
+        }
+      },
+      _getLabelAlignmentClasses: function(align) {
+        if (align === 'top' || align === 'bottom') {
+          return 'layout horizontal center-justified';
+        } else if (align === 'right') {
+          return 'flex';
+        } else {
+          return '';
+        }
+      },
+      _getInputAlignmentClasses: function(align) {
+        if (align === 'top' || align === 'bottom') {
+          return 'layout horizontal center-justified';
+        } else if (align === 'right') {
+          return 'left-aligned';
+        } else if (align === 'left') {
+          return 'right-aligned';
+        } else {
+          return '';
+        }
+      },
+      _updateDisabledClass: function() {
+        if (this.isDisabled === true) {
+          this.disabledClass = 'disabled';
+        } else {
+          this.disabledClass = '';
+        }
+      }
+
+    });
+  </script>
+</dom-module>

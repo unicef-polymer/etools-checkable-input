@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <title>etools-checkable-input demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+
+  <link rel="import" href="../etools-checkable-input.html">
+
+  <style is="custom-style" include="demo-pages-shared-styles">
+    .vertical-section-container {
+      max-width: 900px;
+    }
+    paper-radio-button {
+      margin-right: 24px;
+    }
+    .example-row {
+      display: inline-block;
+      width: 100%;
+      /*text-align: center;*/
+      margin-bottom: 25px;
+    }
+    etools-checkable-input {
+      min-width: 200px;
+    }
+    etools-checkable-input:first-of-type {
+      margin-right: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="vertical-section-container centered">
+  <h1>etools-checkable-input demo</h1>
+
+  <p>Custom checkbox and radio button with label top and bottom aligned:</p>
+  <demo-snippet class="centered-demo">
+    <template>
+      <etools-checkable-input type="checkbox" label="Your label" label-alignment="top" checked="true"></etools-checkable-input>
+      <etools-checkable-input type="radio" label="Your label" label-alignment="top"></etools-checkable-input>
+    </template>
+  </demo-snippet>
+  <demo-snippet class="centered-demo">
+    <template>
+      <etools-checkable-input type="checkbox" label="Your label" label-alignment="bottom"></etools-checkable-input>
+      <etools-checkable-input type="radio" label="Your label" label-alignment="bottom" checked="true"></etools-checkable-input>
+    </template>
+  </demo-snippet>
+
+  <p>Custom checkbox and radio button with label left and right aligned:</p>
+  <demo-snippet class="centered-demo">
+    <template>
+      <etools-checkable-input type="checkbox" label="Your label" label-alignment="left" checked="true"></etools-checkable-input>
+      <etools-checkable-input type="radio" label="Your label" label-alignment="left"></etools-checkable-input>
+    </template>
+  </demo-snippet>
+  <demo-snippet class="centered-demo">
+    <template>
+      <etools-checkable-input type="checkbox" label="Your label" label-alignment="right" is-disabled="true"></etools-checkable-input>
+      <etools-checkable-input type="radio" label="Your label" label-alignment="right" checked="true"></etools-checkable-input>
+    </template>
+  </demo-snippet>
+</div>
+
+</body>
+</html>
