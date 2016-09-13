@@ -29,6 +29,7 @@ Custom property | Description | Default
 `--etools-checkable-input-unchecked-color` | Input unchecked color | `#737373`
 `--etools-checkable-input-font-size` | Label font size | `12px`
 `--etools-checkable-input-label` | Mixin applied to the label | `{}`
+`--etools-checkable-input-disabled-color` | Disabled color | `#d1d1d1`
 
 ## Install
 ```bash
