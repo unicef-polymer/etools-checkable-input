@@ -5,8 +5,8 @@ It also has a disabled state. It's based on paper-checkbox and paper-radio-butto
 
 ## Usage
 ```html
-<etools-checkable-input type="checkbox" label="Your label" label-alignment="top" checked="true" is-disabled="true"></etools-checkable-input>
-<etools-checkable-input type="radio" label="Your label" label-alignment="right" checked="true" is-disabled="false"></etools-checkable-input>
+<etools-checkable-input type="checkbox" label="Your label" label-alignment="top" checked="true" is-disabled="true" label-text-transform="capitalize"></etools-checkable-input>
+<etools-checkable-input type="radio" label="Your label" label-alignment="right" checked="true" is-disabled="false" label-text-transform="uppercase"></etools-checkable-input>
 ```
 
 You can combine the element attributes as you need.
@@ -16,6 +16,7 @@ Available attributes:
 * labelAlignment: String, possible values: 'top', 'bottom', 'right', 'left'
 * checked: Boolean, the element value
 * isDisabled: Boolean, disabled state
+* labelTextTransform: String, values: 'capitalize' or 'uppercase'
 
 ## Styling
 

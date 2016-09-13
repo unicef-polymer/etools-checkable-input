@@ -38,6 +38,7 @@ Custom property | Description | Default
         --paper-radio-button-checked-color: var(--etools-checkable-input-checked-color, #4a90e2);
         --paper-radio-button-unchecked-color: var(--etools-checkable-input-unchecked-color, #737373);
       }
+
       label {
         display: inline-block;
         white-space: nowrap;
@@ -47,24 +48,33 @@ Custom property | Description | Default
         font-weight: 400;
         letter-spacing: 0.011em;
         line-height: 20px;
-        text-transform: uppercase;
+
         cursor: pointer;
         color: var(--etools-checkable-input-unchecked-color, #737373);
         @apply(--etools-checkable-input-label);
       }
+      label.uppercase {
+        text-transform: uppercase;
+      }
+      label.capitalize {
+        text-transform: capitalize;
+      }
+
       .disabled label {
         color: var(--etools-checkable-input-disabled-color, #9b9b9b);
       }
+
       .left-aligned paper-checkbox {
         margin-right: 10px;
       }
+
       .right-aligned {
         margin-left: 10px;
       }
 
     </style>
     <div class$="[[_getElementWrapperClasses(labelAlignment)]] [[disabledClass]]">
-      <label id="chLabel" class$="[[_getLabelAlignmentClasses(labelAlignment)]]">[[label]]</label>
+      <label id="chLabel" class$="[[_getLabelAlignmentClasses(labelAlignment)]] [[labelTextTransform]]">[[label]]</label>
       <div class$="[[_getInputAlignmentClasses(labelAlignment)]]">
         <template is="dom-if" if="[[_isCheckbox(type)]]">
           <paper-checkbox checked="{{checked}}" disabled$="[[isDisabled]]"></paper-checkbox>
@@ -78,85 +88,92 @@ Custom property | Description | Default
   </template>
 
   <script>
-    Polymer({
+    (function () {
+      'use strict';
 
-      is: 'etools-checkable-input',
+      Polymer({
+        is: 'etools-checkable-input',
 
-      properties: {
-        type: {
-          type: String,
-          value: 'checkbox'
+        properties: {
+          type: {
+            type: String,
+            value: 'checkbox'
+          },
+          labelAlignment: {
+            type: String,
+            value: 'right'
+          },
+          labelTextTransform: {
+            type: String,
+            value: ''
+          },
+          checked: {
+            type: Boolean,
+            value: false,
+            notify: true,
+            reflectToAttribute: true
+          },
+          isDisabled: {
+            type: Boolean,
+            value: false,
+            observer: '_updateDisabledClass'
+          }
         },
-        labelAlignment: {
-          type: String,
-          value: 'right'
+        listeners: {
+          'chLabel.tap': '_updateInputVal'
         },
-        checked: {
-          type: Boolean,
-          value: false,
-          notify: true,
-          reflectToAttribute: true
+        _updateInputVal: function () {
+          if (this.isDisabled) {
+            return false;
+          }
+          this.checked = !this.checked;
         },
-        isDisabled: {
-          type: Boolean,
-          value: false,
-          observer: '_updateDisabledClass'
-        }
-      },
-      listeners: {
-        'chLabel.tap': '_updateInputVal'
-      },
-      _updateInputVal: function() {
-        if (this.isDisabled) {
-          return false;
-        }
-        this.checked = !this.checked;
-      },
-      _isCheckbox: function(inputType) {
+        _isCheckbox: function (inputType) {
           return inputType === 'checkbox';
-      },
-      _isRadioBtn: function(inputType) {
-        return inputType === 'radio';
-      },
-      _getElementWrapperClasses: function(align) {
-        if (align === 'bottom') {
-          return 'layout vertical-reverse';
-        } else if (align === 'right') {
-          return 'layout horizontal-reverse wrap-reverse';
-        } else if (align === 'left') {
-          return 'layout horizontal';
-        } else {
-          return '';
+        },
+        _isRadioBtn: function (inputType) {
+          return inputType === 'radio';
+        },
+        _getElementWrapperClasses: function (align) {
+          if (align === 'bottom') {
+            return 'layout vertical-reverse';
+          } else if (align === 'right') {
+            return 'layout horizontal-reverse wrap-reverse';
+          } else if (align === 'left') {
+            return 'layout horizontal';
+          } else {
+            return '';
+          }
+        },
+        _getLabelAlignmentClasses: function (align) {
+          if (align === 'top' || align === 'bottom') {
+            return 'layout horizontal center-justified';
+          } else if (align === 'right') {
+            return 'flex';
+          } else {
+            return '';
+          }
+        },
+        _getInputAlignmentClasses: function (align) {
+          if (align === 'top' || align === 'bottom') {
+            return 'layout horizontal center-justified';
+          } else if (align === 'right') {
+            return 'left-aligned';
+          } else if (align === 'left') {
+            return 'right-aligned';
+          } else {
+            return '';
+          }
+        },
+        _updateDisabledClass: function () {
+          if (this.isDisabled === true) {
+            this.disabledClass = 'disabled';
+          } else {
+            this.disabledClass = '';
+          }
         }
-      },
-      _getLabelAlignmentClasses: function(align) {
-        if (align === 'top' || align === 'bottom') {
-          return 'layout horizontal center-justified';
-        } else if (align === 'right') {
-          return 'flex';
-        } else {
-          return '';
-        }
-      },
-      _getInputAlignmentClasses: function(align) {
-        if (align === 'top' || align === 'bottom') {
-          return 'layout horizontal center-justified';
-        } else if (align === 'right') {
-          return 'left-aligned';
-        } else if (align === 'left') {
-          return 'right-aligned';
-        } else {
-          return '';
-        }
-      },
-      _updateDisabledClass: function() {
-        if (this.isDisabled === true) {
-          this.disabledClass = 'disabled';
-        } else {
-          this.disabledClass = '';
-        }
-      }
 
-    });
+      });
+    })();
   </script>
 </dom-module>
