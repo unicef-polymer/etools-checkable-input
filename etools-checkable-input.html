@@ -18,6 +18,7 @@ Custom property | Description | Default
 `--etools-checkable-input-unchecked-color` | Input unchecked color | `#737373`
 `--etools-checkable-input-font-size` | Label font size | `12px`
 `--etools-checkable-input-label` | Mixin applied to the label | `{}`
+`--etools-checkable-input-disabled-color` | Disabled color | `#d1d1d1`
 
 @demo demo/index.html 
 -->
@@ -61,7 +62,8 @@ Custom property | Description | Default
       }
 
       .disabled label {
-        color: var(--etools-checkable-input-disabled-color, #9b9b9b);
+        color: var(--etools-checkable-input-disabled-color, #d1d1d1);
+        cursor: not-allowed;
       }
 
       .left-aligned paper-checkbox {
