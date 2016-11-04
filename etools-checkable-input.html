@@ -18,7 +18,8 @@ Custom property | Description | Default
 `--etools-checkable-input-unchecked-color` | Input unchecked color | `#737373`
 `--etools-checkable-input-font-size` | Label font size | `12px`
 `--etools-checkable-input-label` | Mixin applied to the label | `{}`
-`--etools-checkable-input-disabled-color` | Disabled color | `#d1d1d1`
+`--etools-checkable-input-disabled-color` | Disabled color | `#d1d1d1`,
+`--etools-checkable-input-ripple-color` | Radio btn ripple(#ink) color | `--primary-color`
 
 @demo demo/index.html 
 -->
@@ -34,10 +35,15 @@ Custom property | Description | Default
         --paper-checkbox-size: var(--etools-checkable-input-size, 16px);
         --paper-checkbox-checked-color: var(--etools-checkable-input-checked-color, #4a90e2);
         --paper-checkbox-unchecked-color: var(--etools-checkable-input-unchecked-color, #737373);
+        --paper-checkbox-unchecked-ink-color: var(--etools-checkable-input-ripple-color, --primary-color);
+        --paper-checkbox-checked-ink-color: var(--etools-checkable-input-ripple-color, --primary-color);
 
         --paper-radio-button-size: var(--etools-checkable-input-size, 16px);
         --paper-radio-button-checked-color: var(--etools-checkable-input-checked-color, #4a90e2);
         --paper-radio-button-unchecked-color: var(--etools-checkable-input-unchecked-color, #737373);
+        --paper-radio-button-checked-ink-color: var(--etools-checkable-input-ripple-color, --primary-color);
+        --paper-radio-button-unchecked-ink-color: var(--etools-checkable-input-ripple-color, --primary-color);
+
       }
 
       label {

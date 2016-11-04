@@ -30,6 +30,7 @@ Custom property | Description | Default
 `--etools-checkable-input-font-size` | Label font size | `12px`
 `--etools-checkable-input-label` | Mixin applied to the label | `{}`
 `--etools-checkable-input-disabled-color` | Disabled color | `#d1d1d1`
+`--etools-checkable-input-ripple-color` | Radio btn ripple(#ink) color | `--primary-color`
 
 ## Install
 ```bash
