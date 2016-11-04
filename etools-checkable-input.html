@@ -85,10 +85,10 @@ Custom property | Description | Default
       <label id="chLabel" class$="[[_getLabelAlignmentClasses(labelAlignment)]] [[labelTextTransform]]">[[label]]</label>
       <div class$="[[_getInputAlignmentClasses(labelAlignment)]]">
         <template is="dom-if" if="[[_isCheckbox(type)]]">
-          <paper-checkbox checked="{{checked}}" disabled$="[[isDisabled]]"></paper-checkbox>
+          <paper-checkbox checked="{{checked}}" disabled$="[[isDisabled]]" on-iron-change="_valueChanged"></paper-checkbox>
         </template>
         <template is="dom-if" if="[[_isRadioBtn(type)]]">
-          <paper-radio-button checked="{{checked}}" disabled$="[[isDisabled]]"></paper-radio-button>
+          <paper-radio-button checked="{{checked}}" disabled$="[[isDisabled]]" on-iron-change="_valueChanged"></paper-radio-button>
         </template>
       </div>
     </div>
@@ -130,11 +130,14 @@ Custom property | Description | Default
         listeners: {
           'chLabel.tap': '_updateInputVal'
         },
+        _valueChanged: function() {
+          this.fire('value-changed', {checked: this.checked === true ? true : false});
+        },
         _updateInputVal: function () {
           if (this.isDisabled) {
             return false;
           }
-          this.checked = !this.checked;
+          this.set('checked', !this.checked);
         },
         _isCheckbox: function (inputType) {
           return inputType === 'checkbox';
