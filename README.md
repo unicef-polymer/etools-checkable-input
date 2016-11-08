@@ -16,7 +16,8 @@ Available attributes:
 * labelAlignment: String, possible values: 'top', 'bottom', 'right', 'left'
 * checked: Boolean, the element value
 * isDisabled: Boolean, disabled state
-* labelTextTransform: String, values: 'capitalize' or 'uppercase'
+* labelTextTransform: String, values: 'capitalize' or 'uppercase',
+* readonly: Boolean, default: false
 
 ## Styling
 
