@@ -21,7 +21,7 @@ Custom property | Description | Default
 `--etools-checkable-input-disabled-color` | Disabled color | `#d1d1d1`,
 `--etools-checkable-input-ripple-color` | Radio btn ripple(#ink) color | `--primary-color`
 
-@demo demo/index.html 
+@demo demo/index.html
 -->
 
 <dom-module id="etools-checkable-input">
@@ -127,6 +127,10 @@ Custom property | Description | Default
             value: 'right'
           },
           labelTextTransform: {
+            type: String,
+            value: ''
+          },
+          label: {
             type: String,
             value: ''
           },
