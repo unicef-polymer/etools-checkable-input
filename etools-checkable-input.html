@@ -66,6 +66,9 @@ Custom property | Description | Default
       label.capitalize {
         text-transform: capitalize;
       }
+      label.end-justified {
+        max-width: calc(100% - 25px);
+      }
 
       :host(:not([readonly])) .disabled label {
         color: var(--etools-checkable-input-disabled-color, #d1d1d1);
@@ -184,7 +187,7 @@ Custom property | Description | Default
           if (align === 'bottom') {
             return 'layout vertical-reverse';
           } else if (align === 'right') {
-            return 'layout horizontal-reverse wrap-reverse';
+            return 'layout horizontal-reverse wrap-reverse end-justified';
           } else if (align === 'left') {
             return 'layout horizontal';
           } else {
@@ -194,8 +197,6 @@ Custom property | Description | Default
         _getLabelAlignmentClasses: function (align) {
           if (align === 'top' || align === 'bottom') {
             return 'layout horizontal center-justified';
-          } else if (align === 'right') {
-            return 'flex';
           } else {
             return '';
           }
