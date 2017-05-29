@@ -114,7 +114,7 @@ Custom property | Description | Default
   </template>
 
   <script>
-    (function () {
+    (function() {
       'use strict';
 
       Polymer({
@@ -160,7 +160,7 @@ Custom property | Description | Default
             if (this.readonly) {
               this.$$('#el')._buttonStateChanged = function() {
                 return false;
-              }
+              };
             }
           }.bind(this));
         },
@@ -171,19 +171,19 @@ Custom property | Description | Default
         _valueChanged: function() {
           this.fire('value-changed', {checked: this.checked === true ? true : false});
         },
-        _updateInputVal: function () {
+        _updateInputVal: function() {
           if (this.isDisabled || this.readonly) {
             return false;
           }
           this.set('checked', !this.checked);
         },
-        _isCheckbox: function (inputType) {
+        _isCheckbox: function(inputType) {
           return inputType === 'checkbox';
         },
-        _isRadioBtn: function (inputType) {
+        _isRadioBtn: function(inputType) {
           return inputType === 'radio';
         },
-        _getElementWrapperClasses: function (align) {
+        _getElementWrapperClasses: function(align) {
           if (align === 'bottom') {
             return 'layout vertical-reverse';
           } else if (align === 'right') {
@@ -194,14 +194,14 @@ Custom property | Description | Default
             return '';
           }
         },
-        _getLabelAlignmentClasses: function (align) {
+        _getLabelAlignmentClasses: function(align) {
           if (align === 'top' || align === 'bottom') {
             return 'layout horizontal center-justified';
           } else {
             return '';
           }
         },
-        _getInputAlignmentClasses: function (align) {
+        _getInputAlignmentClasses: function(align) {
           if (align === 'top' || align === 'bottom') {
             return 'layout horizontal center-justified';
           } else if (align === 'right') {
@@ -212,7 +212,7 @@ Custom property | Description | Default
             return '';
           }
         },
-        _updateDisabledClass: function () {
+        _updateDisabledClass: function() {
           if (this.isDisabled === true) {
             this.disabledClass = 'disabled';
           } else {
