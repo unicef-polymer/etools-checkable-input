@@ -18,6 +18,7 @@ Available attributes:
 * isDisabled: Boolean, disabled state
 * labelTextTransform: String, values: 'capitalize' or 'uppercase',
 * readonly: Boolean, default: false
+* unchangedReadonlyStyle: Boolean, default: true - readonly state will look like active state, if this property is false, readonly style will have the colors reversed
 
 ## Styling
 

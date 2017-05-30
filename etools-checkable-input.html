@@ -70,7 +70,7 @@ Custom property | Description | Default
         max-width: calc(100% - 25px);
       }
 
-      :host(:not([readonly])) .disabled label {
+      :host .disabled label {
         color: var(--etools-checkable-input-disabled-color, #d1d1d1);
         cursor: not-allowed;
       }
@@ -96,16 +96,25 @@ Custom property | Description | Default
         cursor: default;
       }
 
+      :host([readonly][checked][unchanged-readonly-style]) {
+        --paper-checkbox-unchecked-color: var(--etools-checkable-input-checked-color, #4a90e2);
+        --paper-radio-button-unchecked-color: var(--etools-checkable-input-checked-color, #4a90e2);
+      }
+      :host([readonly][is-disabled][unchanged-readonly-style]),
+      :host([readonly][is-disabled][checked][unchanged-readonly-style]) {
+        --paper-checkbox-unchecked-color: var(--etools-checkable-input-unchecked-color, #737373);
+        --paper-radio-button-unchecked-color: var(--etools-checkable-input-unchecked-color, #737373);
+      }
     </style>
     <div class$="[[_getElementWrapperClasses(labelAlignment)]] [[disabledClass]]">
       <label id="chLabel" class$="[[_getLabelAlignmentClasses(labelAlignment)]] [[labelTextTransform]]">[[label]]</label>
       <div class$="[[_getInputAlignmentClasses(labelAlignment)]]">
         <template is="dom-if" if="[[_isCheckbox(type)]]">
-          <paper-checkbox id="el" checked="{{checked}}" disabled$="[[isDisabled]]"
+          <paper-checkbox id="el" checked="{{checked}}" disabled$="[[_isDisabled(isDisabled, readonly)]]"
                           on-iron-change="_valueChanged"></paper-checkbox>
         </template>
         <template is="dom-if" if="[[_isRadioBtn(type)]]">
-          <paper-radio-button id="el" checked="{{checked}}" disabled$="[[isDisabled]]"
+          <paper-radio-button id="el" checked="{{checked}}" disabled$="[[_isDisabled(isDisabled, readonly)]]"
                               on-iron-change="_valueChanged"></paper-radio-button>
         </template>
       </div>
@@ -146,27 +155,59 @@ Custom property | Description | Default
           isDisabled: {
             type: Boolean,
             value: false,
+            reflectToAttribute: true,
             observer: '_updateDisabledClass'
           },
           readonly: {
             type: Boolean,
             value: false,
             reflectToAttribute: true
+          },
+          unchangedReadonlyStyle: {
+            type: Boolean,
+            value: true,
+            reflectToAttribute: true
           }
         },
-
-        ready: function() {
-          this.async(function() {
-            if (this.readonly) {
-              this.$$('#el')._buttonStateChanged = function() {
-                return false;
-              };
-            }
-          }.bind(this));
-        },
-
+        observers: ['_stateChanged(readonly, isDisabled, checked)'],
         listeners: {
           'chLabel.tap': '_updateInputVal'
+        },
+        _stateChanged: function(readonly, isDisabled, checked) {
+          this.async(function() {
+            var el = this.$$('#el');
+            if (el) {
+              var elem;
+              if (this.type === 'checkbox') {
+                // checkbox
+                elem = [el.$.checkbox];
+              } else {
+                // radio
+                elem = [el.$.offRadio, el.$.onRadio];
+              }
+              if (isDisabled) {
+                this._updateOpacity(elem, '');
+                return;
+              }
+              if (readonly) {
+                this._updateOpacity(elem, '1');
+              } else {
+                this._updateOpacity(elem, '');
+              }
+            }
+          });
+        },
+        _updateOpacity: function(elements, opacityValue) {
+          if (!(elements instanceof Array && elements.length)) {
+            return;
+          }
+          elements.forEach(function(el) {
+            el.style.opacity = opacityValue;
+          });
+          this.updateStyles();
+        },
+        _isDisabled: function(isDisabled, readonly) {
+          return isDisabled || readonly;
         },
         _valueChanged: function() {
           this.fire('value-changed', {checked: this.checked === true ? true : false});
