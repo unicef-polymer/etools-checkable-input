@@ -31,6 +31,9 @@ Custom property | Description | Default
         --paper-checkbox-label: {
           display: none;
         };
+        --paper-radio-button-label: {
+          display: none;
+        };
 
         --paper-checkbox-size: var(--etools-checkable-input-size, 16px);
         --paper-checkbox-checked-color: var(--etools-checkable-input-checked-color, #4a90e2);
@@ -46,7 +49,7 @@ Custom property | Description | Default
 
       }
 
-      label {
+      #chLabel {
         display: inline-block;
         white-space: nowrap;
         overflow: hidden;
@@ -60,22 +63,23 @@ Custom property | Description | Default
         color: var(--etools-checkable-input-unchecked-color, #737373);
         @apply(--etools-checkable-input-label);
       }
-      label.uppercase {
+      #chLabel.uppercase {
         text-transform: uppercase;
       }
-      label.capitalize {
+      #chLabel.capitalize {
         text-transform: capitalize;
       }
-      label.end-justified {
+      #chLabel.end-justified {
         max-width: calc(100% - 25px);
       }
 
-      :host .disabled label {
+      :host .disabled #chLabel {
         color: var(--etools-checkable-input-disabled-color, #d1d1d1);
         cursor: not-allowed;
       }
 
-      .left-aligned paper-checkbox {
+      .left-aligned paper-checkbox,
+      .left-aligned paper-radio-button {
         margin-right: 10px;
       }
 
@@ -90,7 +94,7 @@ Custom property | Description | Default
         --paper-radio-button-unchecked-ink-color: rgba(255, 255, 255, 0);
       }
 
-      :host([readonly]) label,
+      :host([readonly]) #chLabel,
       :host([readonly]) paper-checkbox,
       :host([readonly]) paper-radio-button {
         cursor: default;
@@ -105,9 +109,13 @@ Custom property | Description | Default
         --paper-checkbox-unchecked-color: var(--etools-checkable-input-unchecked-color, #737373);
         --paper-radio-button-unchecked-color: var(--etools-checkable-input-unchecked-color, #737373);
       }
+
+      .text-center {
+        text-align: center;
+      }
     </style>
     <div class$="[[_getElementWrapperClasses(labelAlignment)]] [[disabledClass]]">
-      <label id="chLabel" class$="[[_getLabelAlignmentClasses(labelAlignment)]] [[labelTextTransform]]">[[label]]</label>
+      <span id="chLabel" class$="[[_getLabelAlignmentClasses(labelAlignment)]] [[labelTextTransform]]">[[label]]</span>
       <div class$="[[_getInputAlignmentClasses(labelAlignment)]]">
         <template is="dom-if" if="[[_isCheckbox(type)]]">
           <paper-checkbox id="el" checked="{{checked}}" disabled$="[[_isDisabled(isDisabled, readonly)]]"
@@ -226,13 +234,13 @@ Custom property | Description | Default
         },
         _getElementWrapperClasses: function(align) {
           if (align === 'bottom') {
-            return 'layout vertical-reverse';
+            return 'layout vertical-reverse text-center';
           } else if (align === 'right') {
             return 'layout horizontal-reverse wrap-reverse end-justified';
           } else if (align === 'left') {
             return 'layout horizontal';
           } else {
-            return '';
+            return 'layout vertical text-center';
           }
         },
         _getLabelAlignmentClasses: function(align) {
